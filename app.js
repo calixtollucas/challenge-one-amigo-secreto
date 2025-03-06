@@ -1,5 +1,6 @@
 //O principal objetivo deste desafio é fortalecer suas habilidades em lógica de programação. Aqui você deverá desenvolver a lógica para resolver o problema.
 let amigos = [];
+let sorteados = [];
 
 function atualizaLista(){
     const listaAmigos = document.querySelector('ul#listaAmigos');
@@ -21,12 +22,17 @@ function adicionarAmigo(){
         return;
     }
 
+    if(amigos.includes(input.value)){
+        alert("Este nome já Existe, por favor insira outro")
+        return;
+    }
+
     amigos.push(input.value);
     atualizaLista();
 }
 
-function sortearAmigo(){
-    const listaResultado = document.querySelector('ul#resultado');
+function iniciarSorteio(){
+    let sorteado
 
     //valida se a lista não está vazia.
     if(amigos.length <= 1){
@@ -35,8 +41,29 @@ function sortearAmigo(){
     }
 
     //sorteio
-    console.log(amigos.length)
-    const numeroSorteado = Math.floor(Math.random() * (amigos.length));
+    do {
+        if(sorteados.sort().join()===amigos.sort().join()){
+            alert("TODOS JÁ FORAM SORTEADOS")
+            return;
+        }
+        sorteado = sortear()
+    } while (sorteados.includes(sorteado));
+    sorteados.push(sorteado);
+    atualizaResultado(sorteado);
+}
 
-    console.log(amigos[numeroSorteado]);
+function atualizaResultado(sorteado){
+    const listaResultado = document.querySelector('ul#resultado');
+
+        const li = document.createElement("li");
+        li.textContent = sorteado;
+
+        listaResultado.appendChild(li);
+}
+
+function sortear(){
+    const numeroSorteado = Math.floor(Math.random() * (amigos.length));
+    const sorteado = amigos[numeroSorteado];
+
+    return sorteado
 }
